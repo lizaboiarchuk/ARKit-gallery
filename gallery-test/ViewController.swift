@@ -17,9 +17,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     private enum Configuration {
         static let imageToWallRatio = 0.3
+        static let frameHorizontalBorderRatio = 0.15
+        static let frameVerticalBorderRatio = 0.115
+        static let lightIntensity: CGFloat = 180
         static let wallNodeName = "wall-found"
         static let gridNodeName = "wall-grid"
         static let gridImage = UIImage(named: "grid.png")!
+        static let frameImage = UIImage(named: "fr-min.png")!
         static let seeResultLabel = "See result"
         static let addMoreLabel = "Add more"
     }
@@ -78,27 +82,43 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         let location = sender.location(in: self.sceneView)
         let hitTestScene = self.sceneView.hitTest(location, types: [.existingPlaneUsingGeometry, .estimatedVerticalPlane])
-        
         if let first = hitTestScene.first, let anchor = first.anchor as? ARPlaneAnchor, case .wall = anchor.classification {
-            
-            let imageRatio = imageToDisplay.size.height / imageToDisplay.size.width
-            let wallHeight = CGFloat(anchor.extent.z)
-            let imageHeight = wallHeight * Configuration.imageToWallRatio
-            
-            let planeGeometry = SCNPlane(width: imageHeight / imageRatio, height: imageHeight)
-            let material = SCNMaterial()
-            material.lightingModel = .constant
-            material.diffuse.contents = imageToDisplay
-            planeGeometry.materials = [material]
-            
-            let pictureNode = SCNNode(geometry: planeGeometry)
-            pictureNode.transform = SCNMatrix4(first.anchor!.transform)
-            pictureNode.eulerAngles = SCNVector3(pictureNode.eulerAngles.x + (-Float.pi / 2), pictureNode.eulerAngles.y, pictureNode.eulerAngles.z)
-            pictureNode.position = SCNVector3(first.worldTransform.columns.3.x, first.worldTransform.columns.3.y, first.worldTransform.columns.3.z)
-            
-            sceneView.scene.rootNode.addChildNode(pictureNode)
+            createFrame(anchor: anchor, node: first)
         }
-        else { showMessage("Not a wall") }
+        else {
+            showMessage("Not a wall")
+        }
+    }
+    
+    
+    private func createFrame(anchor: ARPlaneAnchor, node: ARHitTestResult) {
+        let wallHeight = CGFloat(anchor.extent.z)
+        let imageRatio = imageToDisplay.size.height / imageToDisplay.size.width
+        let imageHeight = wallHeight * Configuration.imageToWallRatio
+        let frameNode = createImageNode(image: Configuration.frameImage, size: (imageHeight / imageRatio, imageHeight))
+        let pictureNode = createImageNode(image: imageToDisplay, size: (imageHeight / imageRatio / ( 1 + 2 * Configuration.frameHorizontalBorderRatio), imageHeight / ( 1 + 2 * Configuration.frameVerticalBorderRatio)))
+        frameNode.transform = SCNMatrix4(anchor.transform)
+        frameNode.eulerAngles = SCNVector3(frameNode.eulerAngles.x + (-Float.pi / 2), frameNode.eulerAngles.y, frameNode.eulerAngles.z)
+        frameNode.position = SCNVector3(node.worldTransform.columns.3.x, node.worldTransform.columns.3.y, node.worldTransform.columns.3.z + 0.001)
+        pictureNode.transform = SCNMatrix4(anchor.transform)
+        pictureNode.eulerAngles = SCNVector3(pictureNode.eulerAngles.x + (-Float.pi / 2), pictureNode.eulerAngles.y, pictureNode.eulerAngles.z)
+        pictureNode.position = SCNVector3(node.worldTransform.columns.3.x, node.worldTransform.columns.3.y, node.worldTransform.columns.3.z)
+        sceneView.scene.rootNode.addChildNode(pictureNode)
+        sceneView.scene.rootNode.addChildNode(frameNode)
+    }
+    
+    
+    private func createImageNode(image: UIImage, size: (CGFloat, CGFloat)) -> SCNNode{
+        let imageGeometry = SCNPlane(width: size.0, height: size.1)
+        let imageMaterial = SCNMaterial()
+        imageMaterial.diffuse.contents = image
+        imageGeometry.materials = [imageMaterial]
+        let imageNode = SCNNode(geometry: imageGeometry)
+        let imageLight = SCNLight()
+        imageLight.intensity = Configuration.lightIntensity
+        imageLight.type = .directional
+        imageNode.light = imageLight
+        return imageNode
     }
     
     
@@ -141,7 +161,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             plane.height = height
         }
         else {
-            guard let planeNode = node.childNodes.first, let plane = planeNode.geometry as? SCNPlane else { return }
+            guard let planeNode = node.childNodes.first else { return }
             planeNode.isHidden = true
             
         }
