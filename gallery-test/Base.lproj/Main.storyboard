@@ -125,9 +125,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-h1-WRS">
-                                <rect key="frame" x="0.0" y="39" width="414" height="818"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-h1-WRS">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </arscnView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="6n1-c8-wWl">
                                 <rect key="frame" x="20" y="811" width="374" height="31"/>
@@ -150,10 +149,14 @@
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="BrB-h1-WRS" secondAttribute="bottom" id="BS8-wO-fMJ"/>
+                            <constraint firstItem="BrB-h1-WRS" firstAttribute="top" secondItem="U0K-SW-4ec" secondAttribute="top" id="GJ6-je-MdN"/>
                             <constraint firstItem="6n1-c8-wWl" firstAttribute="centerX" secondItem="U0K-SW-4ec" secondAttribute="centerX" id="Ljb-6n-EbY"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="6n1-c8-wWl" secondAttribute="bottom" constant="20" id="Uod-OX-Tnn"/>
                             <constraint firstItem="6n1-c8-wWl" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="20" id="be8-sd-anW"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="6n1-c8-wWl" secondAttribute="trailing" constant="20" id="m6d-bA-F0o"/>
+                            <constraint firstItem="BrB-h1-WRS" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="u1S-A1-hAa"/>
+                            <constraint firstItem="BrB-h1-WRS" firstAttribute="trailing" secondItem="fQZ-KI-GVf" secondAttribute="trailing" id="ugZ-xn-lCT"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="EZb-Y0-P5v"/>
