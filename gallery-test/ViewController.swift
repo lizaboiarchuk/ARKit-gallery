@@ -12,7 +12,6 @@ import AVFoundation
 
 // TODO: Track overlaying with wall planes (tv) and add images "between them"
 
-
 class ViewController: UIViewController, ARSCNViewDelegate {
     
     private enum Configuration {
@@ -22,10 +21,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         static let lightIntensity: CGFloat = 180
         static let wallNodeName = "wall-found"
         static let gridNodeName = "wall-grid"
-        static let gridImage = UIImage(named: "grid.png")!
-        static let frameImage = UIImage(named: "fr-min.png")!
         static let seeResultLabel = "See result"
         static let addMoreLabel = "Add more"
+        static let gridImage = UIImage(named: Bundle.main.path(forResource: "grid", ofType: "png")!)!
+        static let frameImage = UIImage(named: Bundle.main.path(forResource: "frame", ofType: "png")!)!
+        
     }
     
     
@@ -33,10 +33,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet private var sceneView: ARSCNView!
     @IBOutlet private weak var showButton: UIButton!
     @IBOutlet private weak var pickImageButton: UIButton!
-    private var presentationMode = false
-    private var imageToDisplay = UIImage(named: "pict.jpeg")!
     
-
+    private var presentationMode = false
+    private var imageToDisplay = UIImage(named: Bundle.main.path(forResource: "test-pic", ofType: "jpeg")!)!
+    
     
     // MARK: - Main methods
     override func viewDidLoad() {

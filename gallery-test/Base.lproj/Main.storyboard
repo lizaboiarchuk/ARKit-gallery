@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Spf-P7-tXU">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
@@ -8,6 +8,66 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--OnboardingViewController-->
+        <scene sceneID="nLs-f8-UcS">
+            <objects>
+                <viewController title="OnboardingViewController" id="Spf-P7-tXU" customClass="OnboardingViewController" customModule="gallery_test" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VT0-c6-2PA">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="42" translatesAutoresizingMaskIntoConstraints="NO" id="iud-D5-WZj">
+                                <rect key="frame" x="0.0" y="44" width="414" height="798"/>
+                                <subviews>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VM4-JB-WOO">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="638"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <viewLayoutGuide key="contentLayoutGuide" id="nfY-gk-6Tr"/>
+                                        <viewLayoutGuide key="frameLayoutGuide" id="4is-x2-Rgw"/>
+                                    </scrollView>
+                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="NdC-uw-FDd">
+                                        <rect key="frame" x="149.5" y="680" width="115.5" height="26"/>
+                                        <color key="pageIndicatorTintColor" systemColor="labelColor"/>
+                                        <color key="currentPageIndicatorTintColor" systemColor="opaqueSeparatorColor"/>
+                                    </pageControl>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3MU-nB-h8K">
+                                        <rect key="frame" x="142" y="748" width="130" height="50"/>
+                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="130" id="TW9-y6-SZX"/>
+                                            <constraint firstAttribute="height" constant="50" id="Uki-Y5-qFA"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Button">
+                                            <color key="baseForegroundColor" name="AccentColor"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <segue destination="BV1-FR-VrT" kind="presentation" animates="NO" modalPresentationStyle="fullScreen" id="2ow-fX-8I5"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="odc-B2-Oii"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="iud-D5-WZj" firstAttribute="centerX" secondItem="VT0-c6-2PA" secondAttribute="centerX" id="PDs-7W-aen"/>
+                            <constraint firstItem="iud-D5-WZj" firstAttribute="top" secondItem="odc-B2-Oii" secondAttribute="top" id="dxl-tj-wu2"/>
+                            <constraint firstItem="odc-B2-Oii" firstAttribute="trailing" secondItem="iud-D5-WZj" secondAttribute="trailing" id="ocU-gl-hYw"/>
+                            <constraint firstItem="odc-B2-Oii" firstAttribute="bottom" secondItem="iud-D5-WZj" secondAttribute="bottom" constant="20" id="rEE-5f-YjW"/>
+                            <constraint firstItem="iud-D5-WZj" firstAttribute="leading" secondItem="VT0-c6-2PA" secondAttribute="leading" id="wYz-Pg-mxn"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="pageControl" destination="NdC-uw-FDd" id="lAx-gr-cX1"/>
+                        <outlet property="scrollView" destination="VM4-JB-WOO" id="cif-kF-prz"/>
+                        <outlet property="startButton" destination="3MU-nB-h8K" id="p8F-1j-78d"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Qb-7a-hti" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1143.4782608695652" y="75.669642857142847"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
@@ -47,6 +107,7 @@
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="6n1-c8-wWl" secondAttribute="trailing" constant="20" id="m6d-bA-F0o"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="EZb-Y0-P5v"/>
                     <connections>
                         <outlet property="pickImageButton" destination="pcu-zc-a1t" id="uMq-Z6-5RG"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
@@ -60,8 +121,14 @@
     </scenes>
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
