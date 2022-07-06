@@ -47,6 +47,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
         super.viewDidLoad()
         sceneView.delegate = self
         initGectureRecognizers()
+        PHPhotoLibrary.requestAuthorization({ status in
+            print(status)
+        })
     }
     
     
@@ -113,12 +116,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
         if let location = self.imageLocationText, let date = self.imageCreatedDateText {
             let text = SCNText(string: "\(date) \n \(location)", extrusionDepth: 1)
             let material = SCNMaterial()
-            material.diffuse.contents = UIColor.magenta
+            material.diffuse.contents = UIColor.black
             text.materials = [material]
             
             let textNode = SCNNode()
-            textNode.position = SCNVector3(node.worldTransform.columns.3.x, node.worldTransform.columns.3.y + Float(imageHeight) / 2, node.worldTransform.columns.3.z)
-            textNode.scale = SCNVector3(x:0.01, y:0.01, z:0.01)
+            textNode.position = SCNVector3(node.worldTransform.columns.3.x, node.worldTransform.columns.3.y - Float(imageHeight) / 2 + Float(text.containerFrame.height), node.worldTransform.columns.3.z)
+            textNode.scale = SCNVector3(x:0.001, y:0.001, z:0.001)
             textNode.geometry = text
             
             sceneView.scene.rootNode.addChildNode(textNode)
@@ -196,7 +199,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
         }
 
         if let asset: PHAsset = info[UIImagePickerController.InfoKey.phAsset] as? PHAsset {
-            self.imageCreatedDateText = asset.creationDate?.description
+            self.imageCreatedDateText = asset.creationDate?.formatted()
             if let loc = asset.location {
                 CLGeocoder().reverseGeocodeLocation(loc) { placemarks, error in
 
