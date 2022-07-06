@@ -9,10 +9,12 @@ import UIKit
 import SceneKit
 import ARKit
 import AVFoundation
+import Photos
+import CoreLocation
 
 // TODO: Track overlaying with wall planes (tv) and add images "between them"
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     private enum Configuration {
         static let imageToWallRatio = 0.3
@@ -36,6 +38,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     private var presentationMode = false
     private var imageToDisplay = UIImage(named: Bundle.main.path(forResource: "test-pic", ofType: "jpeg")!)!
+    private var imageCreatedDateText: String?
+    private var imageLocationText: String?
     
     
     // MARK: - Main methods
@@ -97,12 +101,29 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let imageHeight = wallHeight * Configuration.imageToWallRatio
         let frameNode = createImageNode(image: Configuration.frameImage, size: (imageHeight / imageRatio, imageHeight))
         let pictureNode = createImageNode(image: imageToDisplay, size: (imageHeight / imageRatio / ( 1 + 2 * Configuration.frameHorizontalBorderRatio), imageHeight / ( 1 + 2 * Configuration.frameVerticalBorderRatio)))
+        
         frameNode.transform = SCNMatrix4(anchor.transform)
         frameNode.eulerAngles = SCNVector3(frameNode.eulerAngles.x + (-Float.pi / 2), frameNode.eulerAngles.y, frameNode.eulerAngles.z)
         frameNode.position = SCNVector3(node.worldTransform.columns.3.x, node.worldTransform.columns.3.y, node.worldTransform.columns.3.z + 0.001)
+        
         pictureNode.transform = SCNMatrix4(anchor.transform)
         pictureNode.eulerAngles = SCNVector3(pictureNode.eulerAngles.x + (-Float.pi / 2), pictureNode.eulerAngles.y, pictureNode.eulerAngles.z)
         pictureNode.position = SCNVector3(node.worldTransform.columns.3.x, node.worldTransform.columns.3.y, node.worldTransform.columns.3.z)
+        
+        if let location = self.imageLocationText, let date = self.imageCreatedDateText {
+            let text = SCNText(string: "\(date) \n \(location)", extrusionDepth: 1)
+            let material = SCNMaterial()
+            material.diffuse.contents = UIColor.magenta
+            text.materials = [material]
+            
+            let textNode = SCNNode()
+            textNode.position = SCNVector3(node.worldTransform.columns.3.x, node.worldTransform.columns.3.y + Float(imageHeight) / 2, node.worldTransform.columns.3.z)
+            textNode.scale = SCNVector3(x:0.01, y:0.01, z:0.01)
+            textNode.geometry = text
+            
+            sceneView.scene.rootNode.addChildNode(textNode)
+        }
+        
         sceneView.scene.rootNode.addChildNode(pictureNode)
         sceneView.scene.rootNode.addChildNode(frameNode)
     }
@@ -166,6 +187,42 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             
         }
     }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+
+        if let image = info[.originalImage] as? UIImage {
+            self.imageToDisplay = image
+        }
+
+        if let asset: PHAsset = info[UIImagePickerController.InfoKey.phAsset] as? PHAsset {
+            self.imageCreatedDateText = asset.creationDate?.description
+            if let loc = asset.location {
+                CLGeocoder().reverseGeocodeLocation(loc) { placemarks, error in
+
+                    guard let placemark = placemarks?.first else {
+                        let errorString = error?.localizedDescription ?? "Unexpected Error"
+                        print("Unable to reverse geocode the given location. Error: \(errorString)")
+                        return
+                    }
+
+                    let geo = ReversedGeoLocation(with: placemark)
+                    self.imageLocationText = "\(geo.city), \(geo.country)"
+                    print("\(geo.city), \(geo.country)")
+                }
+            }
+        } else {
+            print("Asset: nil")
+        }
+    }
+    
+    @IBAction func chooseImageTap(_ sender: Any) {
+        let pickerViewController = UIImagePickerController()
+        pickerViewController.delegate = self
+        pickerViewController.sourceType = .photoLibrary
+        present(pickerViewController, animated: true)
+    }
+    
 }
     
     
@@ -180,25 +237,27 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
 */
     
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
-        
-    }
+func session(_ session: ARSession, didFailWithError error: Error) {
+    // Present an error message to the user
     
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        
-    }
+}
+
+func sessionWasInterrupted(_ session: ARSession) {
+    // Inform the user that the session has been interrupted, for example, by presenting an overlay
     
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
+}
+
+func sessionInterruptionEnded(_ session: ARSession) {
+    // Reset tracking and/or remove existing anchors if consistent tracking is required
+    
+}
+
+struct ReversedGeoLocation {
+    let city: String
+    let country: String
+
+    init(with placemark: CLPlacemark) {
+        self.city           = placemark.locality ?? ""
+        self.country        = placemark.country ?? ""
     }
-
-
-
-
-
-
-
-
+}
