@@ -120,7 +120,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
             text.materials = [material]
             
             let textNode = SCNNode()
-            textNode.position = SCNVector3(node.worldTransform.columns.3.x, node.worldTransform.columns.3.y - Float(imageHeight) / 2 + Float(text.containerFrame.height), node.worldTransform.columns.3.z)
+            textNode.position = SCNVector3(frameNode.position.x, frameNode.position.y - Float(imageHeight) / 2 + Float(text.containerFrame.height) - 0.02, frameNode.position.z)
+            textNode.eulerAngles = SCNVector3(textNode.eulerAngles.x, textNode.eulerAngles.y + (-Float.pi / 10), textNode.eulerAngles.z)
             textNode.scale = SCNVector3(x:0.001, y:0.001, z:0.001)
             textNode.geometry = text
             
@@ -195,7 +196,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
         picker.dismiss(animated: true, completion: nil)
 
         if let image = info[.originalImage] as? UIImage {
-            self.imageToDisplay = image
+            self.imageToDisplay = image.fixOrientation()
         }
 
         if let asset: PHAsset = info[UIImagePickerController.InfoKey.phAsset] as? PHAsset {
@@ -263,4 +264,19 @@ struct ReversedGeoLocation {
         self.city           = placemark.locality ?? ""
         self.country        = placemark.country ?? ""
     }
+}
+
+
+
+extension UIImage {
+    
+    func fixOrientation() -> UIImage {
+        if self.imageOrientation == UIImage.Orientation.up { return self }
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        self.draw(in: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
+        let normalizedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return normalizedImage;
+    }
+
 }
