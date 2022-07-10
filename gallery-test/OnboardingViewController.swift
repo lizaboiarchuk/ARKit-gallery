@@ -63,7 +63,6 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate, ARSCNVie
         if swipedToTheEnd {
             startButton.isHidden = false
         }
-        
         screenLabel.text = Configuration.titles[page]
     }
   }

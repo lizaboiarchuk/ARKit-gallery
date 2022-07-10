@@ -16,6 +16,7 @@ import CoreLocation
 
 class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+
     private enum Configuration {
         static let imageToWallRatio = 0.3
         static let frameHorizontalBorderRatio = 0.15
@@ -35,11 +36,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
     @IBOutlet private var sceneView: ARSCNView!
     @IBOutlet private weak var showButton: UIButton!
     @IBOutlet private weak var pickImageButton: UIButton!
+    @IBOutlet private weak var styleButton: UIButton!
     
     private var presentationMode = false
     private var imageToDisplay = UIImage(named: Bundle.main.path(forResource: "test-pic", ofType: "jpeg")!)!
     private var imageCreatedDateText: String?
     private var imageLocationText: String?
+    
+    private var currentStyle = 0
+    private var currentFrame = 0
+    
     
     
     // MARK: - Main methods
@@ -47,10 +53,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
         super.viewDidLoad()
         sceneView.delegate = self
         initGectureRecognizers()
-        PHPhotoLibrary.requestAuthorization({ status in
-            print(status)
-        })
+        styleButton.addTarget(self, action: #selector(chooseStyle), for: .touchUpInside)
+        PHPhotoLibrary.requestAuthorization({ status in print(status) })
     }
+    
+    
+    
+    @objc func chooseStyle(_ sender: UIButton) {
+    }
+    
     
     
     private func initGectureRecognizers() {
@@ -63,7 +74,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
     @objc func changeMode(_ sender: UIButton) {
         let newLabel = presentationMode ? Configuration.seeResultLabel : Configuration.addMoreLabel
         showButton.setTitle(newLabel, for: .normal)
-        sceneView.scene.rootNode.childNodes.filter({ $0.name == "wall-found" }).forEach({ $0.childNodes.filter({ $0.name == "wall-grid" }).forEach({ $0.isHidden = !presentationMode })})
+        sceneView.scene.rootNode.childNodes.filter({ $0.name == Configuration.wallNodeName }).forEach({ $0.childNodes.filter({ $0.name == Configuration.gridNodeName }).forEach({ $0.isHidden = !presentationMode })})
         presentationMode = !presentationMode
     }
     
@@ -227,6 +238,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
         present(pickerViewController, animated: true)
     }
     
+    @IBAction func unwindSegue(_ sender: UIStoryboardSegue)
+    {
+        let sourceViewController = sender.source
+        // Pull any data from the view controller which initiated the unwind segue.
+    }
+    
 }
     
     
@@ -256,13 +273,16 @@ func sessionInterruptionEnded(_ session: ARSession) {
     
 }
 
-struct ReversedGeoLocation {
-    let city: String
-    let country: String
 
-    init(with placemark: CLPlacemark) {
-        self.city           = placemark.locality ?? ""
-        self.country        = placemark.country ?? ""
-    }
-}
+
+
+
+
+
+
+
+
+
+
+
 
