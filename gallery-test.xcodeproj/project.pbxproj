@@ -31,6 +31,7 @@
 		25D99A4F287E11BB004E9D4E /* frame-wooden.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D99A4C287E11BB004E9D4E /* frame-wooden.png */; };
 		25D99A51287E1412004E9D4E /* FrameConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D99A50287E1412004E9D4E /* FrameConfig.swift */; };
 		25D99A55287E2027004E9D4E /* frame-polaroid.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D99A54287E2027004E9D4E /* frame-polaroid.png */; };
+		25D99A57287E22BA004E9D4E /* Models in Resources */ = {isa = PBXBuildFile; fileRef = 25D99A56287E22BA004E9D4E /* Models */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		25D99A4C287E11BB004E9D4E /* frame-wooden.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-wooden.png"; sourceTree = "<group>"; };
 		25D99A50287E1412004E9D4E /* FrameConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameConfig.swift; sourceTree = "<group>"; };
 		25D99A54287E2027004E9D4E /* frame-polaroid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-polaroid.png"; sourceTree = "<group>"; };
+		25D99A56287E22BA004E9D4E /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Models; sourceTree = "<group>"; };
 		F8F2B2752875D3F000F58F4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -185,6 +187,7 @@
 		25BBF98C28746D1200F2CA3F /* Files */ = {
 			isa = PBXGroup;
 			children = (
+				25D99A56287E22BA004E9D4E /* Models */,
 				25D99A47287E1071004E9D4E /* Frames */,
 				251BAF1E287A3B6C00DFE9EB /* Styles */,
 				2593F2FC2871B8E800DF31E2 /* grid.png */,
@@ -308,6 +311,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25D99A57287E22BA004E9D4E /* Models in Resources */,
 				251BAF24287A3B8A00DFE9EB /* style1.png in Resources */,
 				25D99A49287E10AC004E9D4E /* frame-gold.png in Resources */,
 				25D99A55287E2027004E9D4E /* frame-polaroid.png in Resources */,
