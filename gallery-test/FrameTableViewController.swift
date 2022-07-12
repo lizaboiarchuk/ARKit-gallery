@@ -9,14 +9,14 @@ import UIKit
 
 class FrameTableViewController: UITableViewController {
     
-    private let labels = ["Gold", "Home", "Wooden"]
-    private let images = [UIImage(named: Bundle.main.path(forResource: "style1", ofType: "png")!)!,
-                          UIImage(named: Bundle.main.path(forResource: "style2", ofType: "png")!)!,
-                          UIImage(named: Bundle.main.path(forResource: "style4", ofType: "png")!)!]
+    var selectedOption: String = "Gold"
     
+    private let labels = ["Gold", "Home", "Wooden", "Polaroid"]
+    private let images = [UIImage(named: Bundle.main.path(forResource: "frame-gold", ofType: "png")!)!,
+                          UIImage(named: Bundle.main.path(forResource: "frame-home", ofType: "png")!)!,
+                          UIImage(named: Bundle.main.path(forResource: "frame-wooden", ofType: "png")!)!,
+                          UIImage(named: Bundle.main.path(forResource: "frame-polaroid", ofType: "png")!)!,]
     
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
@@ -34,5 +34,8 @@ class FrameTableViewController: UITableViewController {
         return cell.configure(label: labels[Int(indexPath.row)], image: images[Int(indexPath.row)])
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedOption = labels[indexPath.row] 
+    }
     
 }

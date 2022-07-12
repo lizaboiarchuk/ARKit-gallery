@@ -19,16 +19,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
 
     private enum Configuration {
         static let imageToWallRatio = 0.3
-        static let frameHorizontalBorderRatio = 0.15
-        static let frameVerticalBorderRatio = 0.115
         static let lightIntensity: CGFloat = 180
         static let wallNodeName = "wall-found"
         static let gridNodeName = "wall-grid"
         static let seeResultLabel = "See result"
         static let addMoreLabel = "Add more"
         static let gridImage = UIImage(named: Bundle.main.path(forResource: "grid", ofType: "png")!)!
-        static let frameImage = UIImage(named: Bundle.main.path(forResource: "frame", ofType: "png")!)!
-        
     }
     
     
@@ -44,7 +40,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
     private var imageLocationText: String?
     
     private var currentStyle = 0
-    private var currentFrame = 0
+    private var currentFrame: FrameStyle = .gold
+    private var frameConfig = getFrameBorders(style: .gold)
+    private var frameImage = getFrameImage(style: .gold)
+    
     
     
     
@@ -113,8 +112,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
         let wallHeight = CGFloat(anchor.extent.z)
         let imageRatio = imageToDisplay.size.height / imageToDisplay.size.width
         let imageHeight = wallHeight * Configuration.imageToWallRatio
-        let frameNode = createImageNode(image: Configuration.frameImage, size: (imageHeight / imageRatio, imageHeight))
-        let pictureNode = createImageNode(image: imageToDisplay, size: (imageHeight / imageRatio / ( 1 + 2 * Configuration.frameHorizontalBorderRatio), imageHeight / ( 1 + 2 * Configuration.frameVerticalBorderRatio)))
+        let frameNode = createImageNode(image: frameImage, size: (imageHeight / imageRatio, imageHeight))
+        let pictureNode = createImageNode(image: imageToDisplay, size: (imageHeight / imageRatio / ( 1 + 2 * frameConfig.horizontal), imageHeight / ( 1 + 2 * frameConfig.vertical)))
         
         frameNode.transform = SCNMatrix4(anchor.transform)
         frameNode.eulerAngles = SCNVector3(frameNode.eulerAngles.x + (-Float.pi / 2), frameNode.eulerAngles.y, frameNode.eulerAngles.z)
@@ -238,10 +237,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
         present(pickerViewController, animated: true)
     }
     
-    @IBAction func unwindSegue(_ sender: UIStoryboardSegue)
-    {
-        let sourceViewController = sender.source
-        // Pull any data from the view controller which initiated the unwind segue.
+    @IBAction func unwindSegue(_ sender: UIStoryboardSegue) {
+        let sourceViewController = sender.source as! FrameTableViewController
+        self.currentFrame = FrameStyle(rawValue: sourceViewController.selectedOption) ?? .gold
+        self.frameConfig = getFrameBorders(style: self.currentFrame)
+        self.frameImage = getFrameImage(style: self.currentFrame)
+        
+        print(self.currentFrame.rawValue)
     }
     
 }
