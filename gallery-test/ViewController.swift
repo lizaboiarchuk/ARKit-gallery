@@ -36,13 +36,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
     
     private var presentationMode = false
     private var imageToDisplay = UIImage(named: Bundle.main.path(forResource: "test-pic", ofType: "jpeg")!)!
+    private var styledImage = UIImage(named: Bundle.main.path(forResource: "test-pic", ofType: "jpeg")!)!
     private var imageCreatedDateText: String?
     private var imageLocationText: String?
     
-    private var currentStyle = 0
+    private var currentStyle: ImageStyle = .default
+    
     private var currentFrame: FrameStyle = .gold
     private var frameConfig = getFrameBorders(style: .gold)
     private var frameImage = getFrameImage(style: .gold)
+    
+    private let styler: ImageStyler = ImageStyler()
     
     
     
@@ -109,11 +113,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
     
     
     private func createFrame(anchor: ARPlaneAnchor, node: ARHitTestResult) {
+        
+        
+        styledImage = styler.styleImage(imageToDisplay, as: currentStyle)
+        
         let wallHeight = CGFloat(anchor.extent.z)
-        let imageRatio = imageToDisplay.size.height / imageToDisplay.size.width
+        let imageRatio = styledImage.size.height / styledImage.size.width
         let imageHeight = wallHeight * Configuration.imageToWallRatio
         let frameNode = createImageNode(image: frameImage, size: (imageHeight / imageRatio, imageHeight))
-        let pictureNode = createImageNode(image: imageToDisplay, size: (imageHeight / imageRatio / ( 1 + 2 * frameConfig.horizontal), imageHeight / ( 1 + 2 * frameConfig.vertical)))
+        let pictureNode = createImageNode(image: styledImage, size: (imageHeight / imageRatio / ( 1 + 2 * frameConfig.horizontal), imageHeight / ( 1 + 2 * frameConfig.vertical)))
         
         frameNode.transform = SCNMatrix4(anchor.transform)
         frameNode.eulerAngles = SCNVector3(frameNode.eulerAngles.x + (-Float.pi / 2), frameNode.eulerAngles.y, frameNode.eulerAngles.z)
@@ -246,7 +254,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
     }
     
     @IBAction func unwindSegueFromStyleController(_ sender: UIStoryboardSegue) {
-        let sourceViewController = sender.source
+        let sourceViewController = sender.source as! StylesTableViewController
+        self.currentStyle = ImageStyle(rawValue: sourceViewController.selectedOption) ?? .default
+        print(self.currentStyle.rawValue)
+        
     }
     
 }

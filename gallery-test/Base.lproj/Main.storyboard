@@ -29,8 +29,8 @@
                                                 <rect key="frame" x="87" y="0.0" width="240" height="143"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             </view>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="house.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="yQu-fz-MSM">
-                                                <rect key="frame" x="177" y="210" width="60" height="60"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yQu-fz-MSM">
+                                                <rect key="frame" x="177" y="211" width="60" height="60"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="cwJ-w7-OfO"/>
@@ -378,7 +378,6 @@
     <resources>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
         <image name="camera" catalog="system" width="128" height="94"/>
-        <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="pencil" catalog="system" width="128" height="113"/>
         <image name="photo.artframe" catalog="system" width="128" height="93"/>
         <systemColor name="labelColor">

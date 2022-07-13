@@ -14,10 +14,11 @@ class StylesTableViewController: UITableViewController {
     
     
     var selectedOption: String = "Default"
-    private let labels = ["Default", "Van Gogh", "Frozen", "Mosaic"]
-    private let images = [UIImage(named: Bundle.main.path(forResource: "style1", ofType: "png")!)!,
-                          UIImage(named: Bundle.main.path(forResource: "style2", ofType: "png")!)!,
-                          UIImage(named: Bundle.main.path(forResource: "style4", ofType: "png")!)!]
+    private let labels = ["Default", "Geometry", "Picasso", "Munch"]
+    private let images = [UIImage(named: Bundle.main.path(forResource: "style0", ofType: "png")!)!,
+                          UIImage(named: Bundle.main.path(forResource: "style1", ofType: "jpg")!)!,
+                          UIImage(named: Bundle.main.path(forResource: "style2", ofType: "jpg")!)!,
+                          UIImage(named: Bundle.main.path(forResource: "style3", ofType: "jpg")!)!]
     
 
 

@@ -9,9 +9,13 @@ import Foundation
 
 
 
-//enum ImageStyle: String {
-//    case `default` = "Default"
-//    case vanGogh = "Van Gogh"
-//    case  = "Wooden"
-//    case polaroid = "Polaroid"
-//}
+enum ImageStyle: String {
+    
+    case `default` = "Default"
+    case geometry = "Geometry"
+    case picasso = "Picasso"
+    case munch = "Munch"
+    
+}
+
+
