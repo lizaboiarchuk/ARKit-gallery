@@ -18,7 +18,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
     
 
     private enum Configuration {
-        static let imageToWallRatio = 0.3
         static let lightIntensity: CGFloat = 180
         static let wallNodeName = "wall-found"
         static let gridNodeName = "wall-grid"
@@ -33,12 +32,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
     @IBOutlet private weak var showButton: UIButton!
     @IBOutlet private weak var pickImageButton: UIButton!
     @IBOutlet private weak var styleButton: UIButton!
+    @IBOutlet private weak var captureButton: UIButton!
+    @IBOutlet private weak var scaleButton: UIButton!
     
     private var presentationMode = false
     private var imageToDisplay = UIImage(named: Bundle.main.path(forResource: "test-pic", ofType: "jpeg")!)!
     private var styledImage = UIImage(named: Bundle.main.path(forResource: "test-pic", ofType: "jpeg")!)!
     private var imageCreatedDateText: String?
     private var imageLocationText: String?
+    private var imageToWallRatio = 0.2
     
     private var currentStyle: ImageStyle = .default
     
@@ -96,30 +98,48 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
         sceneView.session.pause()
     }
     
-    
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        
         if presentationMode { return }
         
         let location = sender.location(in: self.sceneView)
-        let hitTestScene = self.sceneView.hitTest(location, types: [.existingPlaneUsingGeometry, .estimatedVerticalPlane])
-        if let first = hitTestScene.first, let anchor = first.anchor as? ARPlaneAnchor, case .wall = anchor.classification {
-            createFrame(anchor: anchor, node: first)
+        guard let query = sceneView.raycastQuery(from: location, allowing: .existingPlaneGeometry, alignment: .vertical) else {
+           return
         }
-        else {
-            showMessage("Not a wall")
+                
+        for result in sceneView.session.raycast(query) {
+            guard let anchor = result.anchor as? ARPlaneAnchor, let node = sceneView.node(for: anchor) else {
+                continue
+            }
+            
+            if node.name != Configuration.gridNodeName && node.name != Configuration.wallNodeName {
+                node.removeFromParentNode()
+            } else if case .wall = anchor.classification {
+                createFrame(anchor: anchor, node: result)
+            }
         }
     }
     
+//    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+//
+//        if presentationMode { return }
+//
+//        let location = sender.location(in: self.sceneView)
+//        let hitTestScene = self.sceneView.hitTest(location, types: [.existingPlaneUsingGeometry, .estimatedVerticalPlane])
+//        if let first = hitTestScene.first, let anchor = first.anchor as? ARPlaneAnchor, case .wall = anchor.classification {
+//            createFrame(anchor: anchor, node: first)
+//        }
+//        else {
+//            showMessage("Not a wall")
+//        }
+//    }
     
-    private func createFrame(anchor: ARPlaneAnchor, node: ARHitTestResult) {
-        
-        
+    
+    private func createFrame(anchor: ARPlaneAnchor, node: ARRaycastResult) {
         styledImage = styler.styleImage(imageToDisplay, as: currentStyle)
         
         let wallHeight = CGFloat(anchor.extent.z)
         let imageRatio = styledImage.size.height / styledImage.size.width
-        let imageHeight = wallHeight * Configuration.imageToWallRatio
+        let imageHeight = wallHeight * self.imageToWallRatio
         let frameNode = createImageNode(image: frameImage, size: (imageHeight / imageRatio, imageHeight))
         let pictureNode = createImageNode(image: styledImage, size: (imageHeight / imageRatio / ( 1 + 2 * frameConfig.horizontal), imageHeight / ( 1 + 2 * frameConfig.vertical)))
         
@@ -212,7 +232,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
-
+        
         if let image = info[.originalImage] as? UIImage {
             self.imageToDisplay = image.fixOrientation()
         }
@@ -260,6 +280,60 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
         
     }
     
+    @IBAction func onCaptureTap(_ sender: Any) {
+        if !presentationMode {
+            let alert = UIAlertController(title: "Oops", message: "Only available in presentation mode", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        let takeScreenshotBlock = {
+            UIImageWriteToSavedPhotosAlbum(self.sceneView.snapshot(), nil, nil, nil)
+            DispatchQueue.main.async {
+                // Briefly flash the screen.
+                let flashOverlay = UIView(frame: self.sceneView.frame)
+                flashOverlay.backgroundColor = UIColor.white
+                self.sceneView.addSubview(flashOverlay)
+                UIView.animate(withDuration: 0.25, animations: {
+                    flashOverlay.alpha = 0.0
+                }, completion: { _ in
+                    flashOverlay.removeFromSuperview()
+                })
+            }
+        }
+        
+        switch PHPhotoLibrary.authorizationStatus() {
+        case .authorized:
+            takeScreenshotBlock()
+        case .restricted, .denied:
+            let title = "Photos access denied"
+            let message = "Please enable Photos access for this application in Settings > Privacy to allow saving screenshots."
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization({ (authorizationStatus) in
+                if authorizationStatus == .authorized {
+                    takeScreenshotBlock()
+                }
+            })
+        default:
+            return
+        }
+    }
+    
+    @IBAction func onScaleTap(_ sender: Any) {
+        if self.imageToWallRatio == 0.8 {
+            self.imageToWallRatio = 0.2
+        } else {
+            self.imageToWallRatio += 0.2
+        }
+        
+        let alert = UIAlertController(title: "Scale", message: "Current image to wall ratio is \(String(format: "%.1f", self.imageToWallRatio))", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
 }
     
     
