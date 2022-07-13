@@ -13,7 +13,8 @@ class StylesTableViewController: UITableViewController {
     var chosenStyle = 0
     
     
-    private let labels = ["Van Gogh", "Frozen", "Mosaic"]
+    var selectedOption: String = "Default"
+    private let labels = ["Default", "Van Gogh", "Frozen", "Mosaic"]
     private let images = [UIImage(named: Bundle.main.path(forResource: "style1", ofType: "png")!)!,
                           UIImage(named: Bundle.main.path(forResource: "style2", ofType: "png")!)!,
                           UIImage(named: Bundle.main.path(forResource: "style4", ofType: "png")!)!]
@@ -35,6 +36,10 @@ class StylesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "choiceCell", for: indexPath) as! ChoiceTableViewCell
         return cell.configure(label: labels[Int(indexPath.row)], image: images[Int(indexPath.row)])
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedOption = labels[indexPath.row]
     }
     
     

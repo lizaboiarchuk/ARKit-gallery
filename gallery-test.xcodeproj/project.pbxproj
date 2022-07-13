@@ -32,6 +32,7 @@
 		25D99A51287E1412004E9D4E /* FrameConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D99A50287E1412004E9D4E /* FrameConfig.swift */; };
 		25D99A55287E2027004E9D4E /* frame-polaroid.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D99A54287E2027004E9D4E /* frame-polaroid.png */; };
 		25D99A57287E22BA004E9D4E /* Models in Resources */ = {isa = PBXBuildFile; fileRef = 25D99A56287E22BA004E9D4E /* Models */; };
+		25D99A59287EA991004E9D4E /* StyleConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D99A58287EA991004E9D4E /* StyleConfig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		25D99A50287E1412004E9D4E /* FrameConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameConfig.swift; sourceTree = "<group>"; };
 		25D99A54287E2027004E9D4E /* frame-polaroid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-polaroid.png"; sourceTree = "<group>"; };
 		25D99A56287E22BA004E9D4E /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Models; sourceTree = "<group>"; };
+		25D99A58287EA991004E9D4E /* StyleConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleConfig.swift; sourceTree = "<group>"; };
 		F8F2B2752875D3F000F58F4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -154,6 +156,7 @@
 				2520A54C28717F9A000BAC64 /* AppDelegate.swift */,
 				2520A55028717F9A000BAC64 /* ViewController.swift */,
 				25D99A50287E1412004E9D4E /* FrameConfig.swift */,
+				25D99A58287EA991004E9D4E /* StyleConfig.swift */,
 				25BBF98D2874718B00F2CA3F /* OnboardingViewController.swift */,
 				251BAF0C2879AE1100DFE9EB /* ReversedGeoLocation.swift */,
 				25BBF98C28746D1200F2CA3F /* Files */,
@@ -353,6 +356,7 @@
 				2520A55128717F9A000BAC64 /* ViewController.swift in Sources */,
 				251BAF1D287A390000DFE9EB /* ChoiceTableViewCell.swift in Sources */,
 				251BAF19287A374200DFE9EB /* StylesTableViewController.swift in Sources */,
+				25D99A59287EA991004E9D4E /* StyleConfig.swift in Sources */,
 				251BAF0D2879AE1100DFE9EB /* ReversedGeoLocation.swift in Sources */,
 				2501D0382876BB2C00534EE5 /* UIImage.swift in Sources */,
 				25BBF98E2874718B00F2CA3F /* OnboardingViewController.swift in Sources */,

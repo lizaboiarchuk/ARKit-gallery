@@ -26,11 +26,19 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                         <subviews>
                                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7xG-Rz-gE3">
-                                                <rect key="frame" x="87" y="0.0" width="240" height="207"/>
+                                                <rect key="frame" x="87" y="0.0" width="240" height="143"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             </view>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="house.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="yQu-fz-MSM">
+                                                <rect key="frame" x="177" y="210" width="60" height="60"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="cwJ-w7-OfO"/>
+                                                    <constraint firstAttribute="width" constant="60" id="d6k-sH-kxm"/>
+                                                </constraints>
+                                            </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hoB-4C-QNs">
-                                                <rect key="frame" x="180" y="275" width="54.5" height="128"/>
+                                                <rect key="frame" x="180" y="339" width="54.5" height="128"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="128" id="0Si-1x-rG2"/>
                                                 </constraints>
@@ -39,13 +47,13 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" translatesAutoresizingMaskIntoConstraints="NO" id="2DX-iw-XFo">
-                                                <rect key="frame" x="141" y="471" width="132.5" height="150"/>
+                                                <rect key="frame" x="141" y="535" width="132.5" height="150"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="150" id="4tp-6s-OsL"/>
                                                 </constraints>
                                             </pageControl>
                                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pQE-OP-FLs">
-                                                <rect key="frame" x="87" y="689" width="240" height="207"/>
+                                                <rect key="frame" x="87" y="753" width="240" height="143"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             </view>
                                         </subviews>
@@ -105,6 +113,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="imgView" destination="yQu-fz-MSM" id="fPj-uT-qrl"/>
                         <outlet property="pageControl" destination="2DX-iw-XFo" id="ZH0-rD-Hef"/>
                         <outlet property="sceneView" destination="0T8-sq-NzB" id="3RX-uw-CKj"/>
                         <outlet property="screenLabel" destination="hoB-4C-QNs" id="zsn-wa-gPa"/>
@@ -252,7 +261,7 @@
                     <navigationItem key="navigationItem" title="Styles" leftItemsSupplementBackButton="YES" id="WCl-rM-j5X">
                         <barButtonItem key="leftBarButtonItem" title="Done" id="KBp-oT-AMP">
                             <connections>
-                                <segue destination="eQE-Cc-f4P" kind="unwind" unwindAction="unwindSegue:" id="hrb-Ap-MUO"/>
+                                <segue destination="eQE-Cc-f4P" kind="unwind" unwindAction="unwindSegueFromStyleController:" id="hrb-Ap-MUO"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -317,7 +326,7 @@
                     <navigationItem key="navigationItem" title="Frames" id="3ZA-Mr-lJL">
                         <barButtonItem key="leftBarButtonItem" title="Done" id="LQv-XV-gUJ">
                             <connections>
-                                <segue destination="9Jc-dr-E5z" kind="unwind" unwindAction="unwindSegue:" id="iw2-Iz-hki"/>
+                                <segue destination="9Jc-dr-E5z" kind="unwind" unwindAction="unwindSegueFromFrameController:" id="iw2-Iz-hki"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -369,6 +378,7 @@
     <resources>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
         <image name="camera" catalog="system" width="128" height="94"/>
+        <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="pencil" catalog="system" width="128" height="113"/>
         <image name="photo.artframe" catalog="system" width="128" height="93"/>
         <systemColor name="labelColor">

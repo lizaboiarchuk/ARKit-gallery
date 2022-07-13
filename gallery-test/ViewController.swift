@@ -237,13 +237,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIImagePickerControll
         present(pickerViewController, animated: true)
     }
     
-    @IBAction func unwindSegue(_ sender: UIStoryboardSegue) {
+    @IBAction func unwindSegueFromFrameController(_ sender: UIStoryboardSegue) {
         let sourceViewController = sender.source as! FrameTableViewController
         self.currentFrame = FrameStyle(rawValue: sourceViewController.selectedOption) ?? .gold
         self.frameConfig = getFrameBorders(style: self.currentFrame)
         self.frameImage = getFrameImage(style: self.currentFrame)
-        
         print(self.currentFrame.rawValue)
+    }
+    
+    @IBAction func unwindSegueFromStyleController(_ sender: UIStoryboardSegue) {
+        let sourceViewController = sender.source
     }
     
 }

@@ -13,15 +13,17 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate, ARSCNVie
     private enum Configuration {
         static let pageCount = 4
         static let titles = ["Make sure you are indoor", "Make sure lighting is good", "It works better with textured walls", "Remove extra furniture"]
+        static let imgSystemNames = ["house.fill", "lightbulb.fill", "rectangle.inset.fill", "trash.fill"]
     }
     
+    @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var transparentView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet private weak var pageControl: UIPageControl!
     @IBOutlet private weak var screenLabel: UILabel!
     @IBOutlet private weak var sceneView: ARSCNView!
     @IBOutlet weak var startButton: UIButton!
-    
+    @IBOutlet weak var imgView: UIImageView!
     
     var screenWidth: CGFloat = 0
     var swipedToTheEnd = false
@@ -64,6 +66,7 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate, ARSCNVie
             startButton.isHidden = false
         }
         screenLabel.text = Configuration.titles[page]
+        imgView.image = UIImage(systemName: Configuration.imgSystemNames[page])
     }
   }
     

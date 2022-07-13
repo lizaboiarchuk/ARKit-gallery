@@ -19,13 +19,13 @@ enum FrameStyle: String {
 func getFrameBorders(style: FrameStyle) -> (vertical: Double, horizontal: Double) {
     switch style {
     case .gold:
-            return (0.115, 0.15)
+        return (0.115, 0.15)
     case .home:
-            return (0.12, 0.152)
+        return (0.12, 0.152)
     case .wooden:
-            return (0.082, 0.116)
+        return (0.082, 0.116)
     case .polaroid:
-            return (0.15, 0.14)
+        return (0.15, 0.14)
     }
 }
 
