@@ -1,0 +1,16 @@
+{
+  "MLModelVersionStringKey" : "--",
+  "MLModelDescriptionKey" : "Style transfer for AR-Gallery",
+  "MLModelCreatorDefinedKey" : {
+    "style_feature" : "image",
+    "training_iterations" : "2500",
+    "max_iterations" : "2500",
+    "model" : "resnet-16",
+    "content_feature" : "image",
+    "version" : "1",
+    "num_styles" : "3",
+    "type" : "StyleTransfer"
+  },
+  "MLModelAuthorKey" : "--",
+  "MLModelLicenseKey" : "--"
+}

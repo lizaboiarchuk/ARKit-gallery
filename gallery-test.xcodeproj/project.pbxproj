@@ -20,6 +20,7 @@
 		2520A56328717F9D000BAC64 /* gallery_testTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2520A56228717F9D000BAC64 /* gallery_testTests.swift */; };
 		2520A56D28717F9D000BAC64 /* gallery_testUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2520A56C28717F9D000BAC64 /* gallery_testUITests.swift */; };
 		2520A56F28717F9D000BAC64 /* gallery_testUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2520A56E28717F9D000BAC64 /* gallery_testUITestsLaunchTests.swift */; };
+		2569BE3D287F6EE1000A82F4 /* GalleryStylization.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 2569BE3C287F6EE0000A82F4 /* GalleryStylization.mlpackage */; };
 		2593F2FB2871ABDF00DF31E2 /* test-pic.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 2593F2FA2871ABDF00DF31E2 /* test-pic.jpeg */; };
 		2593F2FD2871B8E800DF31E2 /* grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 2593F2FC2871B8E800DF31E2 /* grid.png */; };
 		25BBF98E2874718B00F2CA3F /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BBF98D2874718B00F2CA3F /* OnboardingViewController.swift */; };
@@ -30,7 +31,6 @@
 		25D99A55287E2027004E9D4E /* frame-polaroid.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D99A54287E2027004E9D4E /* frame-polaroid.png */; };
 		25D99A59287EA991004E9D4E /* StyleConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D99A58287EA991004E9D4E /* StyleConfig.swift */; };
 		25D99A5B287EDDF1004E9D4E /* ImageStyler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D99A5A287EDDF1004E9D4E /* ImageStyler.swift */; };
-		25D99A61287F1A61004E9D4E /* GalleryStylization.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 25D99A60287F1A61004E9D4E /* GalleryStylization.mlmodel */; };
 		25D99A67287F265B004E9D4E /* style1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 25D99A64287F265A004E9D4E /* style1.jpg */; };
 		25D99A68287F265B004E9D4E /* style2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 25D99A65287F265B004E9D4E /* style2.jpg */; };
 		25D99A69287F265B004E9D4E /* style3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 25D99A66287F265B004E9D4E /* style3.jpg */; };
@@ -71,6 +71,7 @@
 		2520A56828717F9D000BAC64 /* gallery-testUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "gallery-testUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2520A56C28717F9D000BAC64 /* gallery_testUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gallery_testUITests.swift; sourceTree = "<group>"; };
 		2520A56E28717F9D000BAC64 /* gallery_testUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gallery_testUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2569BE3C287F6EE0000A82F4 /* GalleryStylization.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = GalleryStylization.mlpackage; sourceTree = "<group>"; };
 		2593F2FA2871ABDF00DF31E2 /* test-pic.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "test-pic.jpeg"; sourceTree = "<group>"; };
 		2593F2FC2871B8E800DF31E2 /* grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grid.png; sourceTree = "<group>"; };
 		25BBF98D2874718B00F2CA3F /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -81,7 +82,6 @@
 		25D99A54287E2027004E9D4E /* frame-polaroid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-polaroid.png"; sourceTree = "<group>"; };
 		25D99A58287EA991004E9D4E /* StyleConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleConfig.swift; sourceTree = "<group>"; };
 		25D99A5A287EDDF1004E9D4E /* ImageStyler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStyler.swift; sourceTree = "<group>"; };
-		25D99A60287F1A61004E9D4E /* GalleryStylization.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GalleryStylization.mlmodel; sourceTree = "<group>"; };
 		25D99A64287F265A004E9D4E /* style1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = style1.jpg; sourceTree = "<group>"; };
 		25D99A65287F265B004E9D4E /* style2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = style2.jpg; sourceTree = "<group>"; };
 		25D99A66287F265B004E9D4E /* style3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = style3.jpg; sourceTree = "<group>"; };
@@ -219,7 +219,7 @@
 		25D99A5D287EDF21004E9D4E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				25D99A60287F1A61004E9D4E /* GalleryStylization.mlmodel */,
+				2569BE3C287F6EE0000A82F4 /* GalleryStylization.mlpackage */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -366,13 +366,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				25D99A51287E1412004E9D4E /* FrameConfig.swift in Sources */,
+				2569BE3D287F6EE1000A82F4 /* GalleryStylization.mlpackage in Sources */,
 				251BAF1B287A375300DFE9EB /* FrameTableViewController.swift in Sources */,
 				2520A55128717F9A000BAC64 /* ViewController.swift in Sources */,
 				25D99A5B287EDDF1004E9D4E /* ImageStyler.swift in Sources */,
 				251BAF1D287A390000DFE9EB /* ChoiceTableViewCell.swift in Sources */,
 				251BAF19287A374200DFE9EB /* StylesTableViewController.swift in Sources */,
 				25D99A59287EA991004E9D4E /* StyleConfig.swift in Sources */,
-				25D99A61287F1A61004E9D4E /* GalleryStylization.mlmodel in Sources */,
 				251BAF0D2879AE1100DFE9EB /* ReversedGeoLocation.swift in Sources */,
 				2501D0382876BB2C00534EE5 /* UIImage.swift in Sources */,
 				25BBF98E2874718B00F2CA3F /* OnboardingViewController.swift in Sources */,
